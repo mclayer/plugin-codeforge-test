@@ -137,5 +137,12 @@ Orchestrator가 범위 지정하면 wrapper에 `--scope=<path>` 인자로 전달
 - 별도 종합 판단 없음 — PASS/FAIL 이진, 원인 판정은 ArchitectPLAgent (Orchestrator 경유)
 - 직접 러너 호출 금지 — 반드시 `.claude/_overlay/run-tests.sh` / `.claude/_overlay/run-perf.sh` wrapper 경유 (consumer가 러너 명령·환경·baseline 결정 캡슐화)
 
+## Story 섹션 write boundary
+
+### §9.3 write boundary
+
+TestAgent는 Story file §9.3 "구현 테스트" 섹션을 **직접 write 하지 않는다**. 구조화된 테스트 verdict (PASS/FAIL + 상세 보고)를 Orchestrator에 반환하면, Orchestrator가 verdict 수령 후 DocsAgent 경유 §9.3을 append 처리한다.
+
 ## 문서화 표준
-GitHub Issue/PR/docs write 권한 없음. 모든 문서화는 Orchestrator 경유 DocsAgent가 기록. 문서화 표준은 [DocsAgent.md](DocsAgent.md) 참조.
+
+본 agent는 자기 lane의 self-write 책임을 [codeforge-test `CLAUDE.md`](../CLAUDE.md) "write 권한" 섹션에서 정의한 경로(`.claude-work/doc-queue/**` + GitHub MCP 도구 제한)만 따른다. 그 외 docs/** + Story file 섹션 갱신·GitHub 라벨·PR/Issue 라이프사이클 관리는 codeforge wrapper Orchestrator가 처리한다. 형식·phase prefix 규칙은 wrapper [CLAUDE.md](https://github.com/mclayer/plugin-codeforge/blob/main/CLAUDE.md) "오케스트레이션 규칙" 섹션 참조.
