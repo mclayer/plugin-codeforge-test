@@ -1,6 +1,6 @@
 ---
 kind: contract
-contract_version: "1.0"
+contract_version: "1.1"
 status: Active
 related_plugins:
   - codeforge (wrapper, consumer of FIX routing data)
@@ -10,6 +10,7 @@ related_adrs:
   - ADR-009 (Wrapper-only core + writer-distributed lane plugins)
 authors:
   - CFP-38 ζ arc — Test lane extraction (2026-04-29)
+  - CFP-47 — StatefulTestAgent + stateful_invariant_results (additive minor, 2026-04-30) [v1.1]
 ---
 
 # test_verdict v1 — Inter-plugin Contract
@@ -90,6 +91,15 @@ test_verdict:
       threshold_pct: 10             # 기본 — consumer overlay 가 변경 가능
       regression: <bool>            # mean_delta_pct > threshold_pct → true
 
+  stateful_invariant_results:            # NEW v1.1 (optional — §8.5 N/A Story 에서는 부재, CFP-47 / ADR-015)
+    long_running_passed: <int>
+    long_running_invariant_drift_within_tolerance: <bool>
+    restart_recovery_passed: <int>
+    idempotency_replay_passed: <int>
+    graceful_shutdown_passed: <int>
+    time_window_drift_within_tolerance: <bool>
+    duplicate_symptom_with_test_agent: <bool>  # ownership 매트릭스 — CFP-47 spec §3.3
+
   # Self-write 결과 audit
   writes_completed:
     phase_comment: <bool>           # [구현-테스트] prefix comment 게시
@@ -114,7 +124,32 @@ test_verdict:
 - threshold_pct 정책 변경 — minor
 - fix_routing_hint schema 확장 — minor
 
+## v1.0 → v1.1 (additive minor — CFP-47, 2026-04-30)
+
+본 v1.1 은 v1.0 대비 **additive minor** — `stateful_invariant_results` optional 필드 추가만. 기존 `test_results` 변경 없음. v1.0 consumer 가 v1.1 verdict 받아도 `stateful_invariant_results` 무시 — backward-compat.
+
+### Schema 변경 enumeration (v1.0 → v1.1)
+
+1. **`stateful_invariant_results` 추가** (optional) — 7 sub-field:
+   - long_running_passed (int) — §8.5.1 long-running invariant test PASS count
+   - long_running_invariant_drift_within_tolerance (bool) — §8.5.1 drift 허용 범위 내 여부
+   - restart_recovery_passed (int) — §8.5.2 restart recovery test PASS count
+   - idempotency_replay_passed (int) — §8.5.3 replay test PASS count (§11.6 active 시)
+   - graceful_shutdown_passed (int) — §8.5.2 graceful shutdown test PASS count
+   - time_window_drift_within_tolerance (bool) — §8.5.1 rolling window 정확성
+   - duplicate_symptom_with_test_agent (bool) — TestAgent 도 같은 module fail 시 메타데이터 (CFP-47 spec §3.3 ownership matrix)
+
+### Carrier ADR (v1.1)
+
+- **[ADR-015 — Stateful test category](https://github.com/mclayer/plugin-codeforge/blob/main/docs/adr/ADR-015-stateful-test-category.md)** (CFP-47)
+
+### Producer
+
+- §8.5 N/A Story → TestAgent 만 spawn → `test_results` 만 보고 (`stateful_invariant_results` 부재 OK)
+- §8.5 적용 Story → TestAgent + StatefulTestAgent 병렬 spawn → 양쪽 verdict 합쳐 `stateful_invariant_results` 채움 (Orchestrator aggregation)
+
 ## 6. 본 contract 시점 동결 ATTRIBUTION
 
 - 동결 일시: 2026-04-29 (CFP-38)
 - 협업: Claude (codification) · CFP-31 parent §5.8
+- v1.1 동결: 2026-04-30 (CFP-47 — StatefulTestAgent + stateful_invariant_results, additive minor in-place)
