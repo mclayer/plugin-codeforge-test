@@ -46,3 +46,12 @@ consumer overlay `tests.performance.depends_on_functional: true` 시 sequential 
 ### FAIL → 진단
 
 FAIL 시 Orchestrator 경유 DeveloperPL 1차 진단 → ArchitectPLAgent 최종 판정. 본 lane plugin 은 `verdict.status=FAIL` 반환만 — 진단 logic 미보유.
+
+## Dogfood policy (CFP-45)
+
+본 plugin repo 는 runtime SSOT 만 보유. dogfood artifacts (specs/plans/retros/stories/change-plans) 는 [`mclayer/codeforge-internal-docs`](https://github.com/mclayer/codeforge-internal-docs) 단일 monorepo SSOT. 본 plugin 폴더는 `codeforge-internal-docs/test/`. 상세 정책 + Story workflow 흐름은 wrapper [CLAUDE.md](https://github.com/mclayer/plugin-codeforge/blob/main/CLAUDE.md) canonical SSOT 참조 + [ADR-013](https://github.com/mclayer/plugin-codeforge/blob/main/docs/adr/ADR-013-codeforge-family-dogfood-out-policy.md) (PR-I 머지 후 Adopted).
+
+Plugin repo 측 GitHub Issue 와 internal-docs 측 Story file 의 binding:
+- Issue body frontmatter: `story_uri: <internal-docs URL>`
+- Story file frontmatter: `story_issues: [{repo: "mclayer/plugin-codeforge-test", number: <N>}]`
+- `.github/workflows/phase-gate-mergeable.yml` (본 repo) 가 cross-repo Story fetch via GitHub App
