@@ -39,7 +39,7 @@ permissions:
 
 ## 실행 원칙
 
-### 호출 시 subset arg (R9, [CFP-19 spec](../docs/superpowers/specs/2026-04-27-cfp-19-orchestration-parallelization.md))
+### 호출 시 subset arg (R9, [CFP-19 spec](https://github.com/mclayer/codeforge-internal-docs/blob/main/wrapper/specs/2026-04-27-cfp-19-orchestration-parallelization.md))
 
 본 에이전트는 `subset` 프롬프트 arg로 단일 모드 실행 가능 — Orchestrator가 두 subset을 병렬 spawn할 수 있도록 한다.
 
