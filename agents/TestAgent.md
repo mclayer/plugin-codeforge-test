@@ -148,3 +148,21 @@ TestAgent는 Story file §9.3 "구현 테스트" 섹션을 **직접 write 하지
 ## 문서화 표준
 
 본 agent는 자기 lane의 self-write 책임을 [codeforge-test `CLAUDE.md`](../CLAUDE.md) "write 권한" 섹션에서 정의한 경로(`.claude-work/doc-queue/**` + GitHub MCP 도구 제한)만 따른다. 그 외 docs/** + Story file 섹션 갱신·GitHub 라벨·PR/Issue 라이프사이클 관리는 codeforge wrapper Orchestrator가 처리한다. 형식·phase prefix 규칙은 wrapper [CLAUDE.md](https://github.com/mclayer/plugin-codeforge/blob/main/CLAUDE.md) "오케스트레이션 규칙" 섹션 참조.
+
+## Agent Teams Integration (CFP-137 / ADR-036)
+
+### Single-agent lane note
+
+Test lane = single-agent (TestAgent). Agent teams 도입 후에도 TEAM-TEST 미생성 — TestAgent 는 Orchestrator 의 직접 subagent 로 spawn (one-shot return).
+
+### Worktree path 주입 (CFP-136 / ADR-035)
+
+매 lane spawn 시 Orchestrator 가 worktree 생성 + cwd 주입:
+- Path: `$HOME/.claude/worktrees/<repo>/cfp-NNN/test`
+- 자기 worktree 에서 test runner 실행 (functional + perf)
+- Hierarchical branch: `cfp-NNN/test`
+
+### Team-spec reference
+
+Test lane = single-agent — team-spec yaml 미신설. (CFP-137 spec 명시).
+StatefulTestAgent 의 별도 spawn 도 동일 패턴 — Orchestrator 직접 subagent.

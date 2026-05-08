@@ -107,3 +107,21 @@ Orchestrator 가 Story §8.5.0 체크표 결과 기준 spawn:
 - ADR-015 (carrier, CFP-47)
 - ADR-014 (CFP-46 §7.4 / §11.6 design-side 짝)
 - ADR-008 (test-verdict v1.0 → v1.1 additive minor 룰)
+
+## Agent Teams Integration (CFP-137 / ADR-036)
+
+### Single-agent lane note
+
+Test lane = single-agent (TestAgent). Agent teams 도입 후에도 TEAM-TEST 미생성 — TestAgent 는 Orchestrator 의 직접 subagent 로 spawn (one-shot return).
+
+### Worktree path 주입 (CFP-136 / ADR-035)
+
+매 lane spawn 시 Orchestrator 가 worktree 생성 + cwd 주입:
+- Path: `$HOME/.claude/worktrees/<repo>/cfp-NNN/test`
+- 자기 worktree 에서 test runner 실행 (functional + perf)
+- Hierarchical branch: `cfp-NNN/test`
+
+### Team-spec reference
+
+Test lane = single-agent — team-spec yaml 미신설. (CFP-137 spec 명시).
+StatefulTestAgent 의 별도 spawn 도 동일 패턴 — Orchestrator 직접 subagent.
