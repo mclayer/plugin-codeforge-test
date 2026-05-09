@@ -4,6 +4,19 @@
 
 버전 체계: [Semantic Versioning 2.0.0](https://semver.org/lang/ko/). v1.0 이전은 minor bump도 breaking 가능.
 
+## [DEPRECATED] - 2026-05-09
+
+### CFP-317 — CI-native 테스트 전환으로 인한 deprecated 선언
+
+TestAgent 및 StatefulTestAgent spawn 폐지. GitHub Actions CI가 구현 테스트 실행을 담당하게 되어 별도 test lane plugin이 불필요해짐.
+
+- QADeveloperAgent (codeforge-develop plugin)가 `.github/workflows/test.yml` 작성 의무 추가
+- Orchestrator가 `gh pr checks` polling으로 CI 결과 직접 처리
+- `test_verdict v1` contract Archived
+- 본 plugin은 역사적 참조용으로 보존 (ADR-023 lifecycle — 삭제 아님)
+
+관련: [ADR-048](https://github.com/mclayer/plugin-codeforge/blob/main/docs/adr/ADR-048-ci-native-test-execution.md)
+
 ## [0.1.0] - 2026-04-29
 
 ### CFP-38 (codeforge ζ arc) — Initial extraction (NEW)

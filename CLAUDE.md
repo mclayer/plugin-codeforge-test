@@ -1,5 +1,7 @@
 # CLAUDE.md (codeforge-test)
 
+> **[DEPRECATED — CFP-317 / ADR-048, 2026-05-09]** TestAgent / StatefulTestAgent spawn 폐지. GitHub CI가 구현 테스트 실행을 담당. QADeveloperAgent (codeforge-develop)가 `.github/workflows/test.yml` 작성. 본 plugin은 역사적 참조용으로 보존 — 신규 consumer는 사용하지 않음.
+
 codeforge ζ arc Test lane plugin. TestAgent 단독 + owner doc 부재 (가장 단순한 lane).
 
 ## Plugin position
