@@ -4,6 +4,26 @@
 
 버전 체계: [Semantic Versioning 2.0.0](https://semver.org/lang/ko/). v1.0 이전은 minor bump도 breaking 가능.
 
+## [1.0.0] - 2026-05-10
+
+### CFP-367 / ADR-055 — IntegrationTestAgent 도입 (통합테스트 lane 전용 부활)
+
+ADR-048로 deprecated된 codeforge-test plugin을 통합테스트 lane 전용으로 부활. MAJOR bump = 기존 TestAgent/StatefulTestAgent deprecated + IntegrationTestAgent 신규 도입.
+
+### Added
+
+- `agents/IntegrationTestAgent.md` — Sonnet tier, §8.6 Integration Test Contract 이행, docker-compose.test.yml 동적 실행, 전체 suite regression 검증, test-verdict-v2 생성
+- `docs/inter-plugin-contracts/test-verdict-v2.md` — canonical contract (lane: integration, suite_summary, dynamic_test_compliance, §8.6 N/A 면제 패킷 포함)
+
+### Changed
+
+- `CLAUDE.md` — DEPRECATED → REVIVED (ADR-055 / ADR-048 Amendment 1); 통합테스트 lane 동작 문서화; 기존 TestAgent/StatefulTestAgent 섹션에 deprecated 배너 추가
+
+### Deprecated
+
+- `agents/TestAgent.md`, `agents/StatefulTestAgent.md` — CFP-317 / ADR-048로 deprecated 유지 (파일 보존, spawn 불가)
+- `docs/inter-plugin-contracts/test-verdict-v1.md` — Archived (superseded by test-verdict-v2)
+
 ## [DEPRECATED] - 2026-05-09
 
 ### CFP-317 — CI-native 테스트 전환으로 인한 deprecated 선언
