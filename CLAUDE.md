@@ -13,7 +13,7 @@ codeforge 통합테스트 lane plugin. IntegrationTestAgent 전담 — CI gate �
 ## Inter-plugin contracts
 
 - `test_verdict v1` — [`docs/inter-plugin-contracts/test-verdict-v1.md`](docs/inter-plugin-contracts/test-verdict-v1.md) — Archived (CFP-317 / ADR-048)
-- `test_verdict v2` — [`contracts/test-verdict-v2.md`](contracts/test-verdict-v2.md) (canonical SSOT) — Active (CFP-367 / ADR-055)
+- `test_verdict v2` — [`docs/inter-plugin-contracts/test-verdict-v2.md`](docs/inter-plugin-contracts/test-verdict-v2.md) (canonical SSOT) — Active (CFP-367 / ADR-055)
 
 ## Self-write 책임
 
