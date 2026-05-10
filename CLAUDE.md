@@ -1,28 +1,37 @@
 # CLAUDE.md (codeforge-test)
 
-> **[DEPRECATED — CFP-317 / ADR-048, 2026-05-09]** TestAgent / StatefulTestAgent spawn 폐지. GitHub CI가 구현 테스트 실행을 담당. QADeveloperAgent (codeforge-develop)가 `.github/workflows/test.yml` 작성. 본 plugin은 역사적 참조용으로 보존 — 신규 consumer는 사용하지 않음.
+> **[REVIVED — CFP-367 / ADR-055 (2026-05-10)]** 통합테스트 전용 lane으로 부활. IntegrationTestAgent(Sonnet) 신규 추가. TestAgent / StatefulTestAgent는 deprecated 유지(ADR-048 §결정 2).
 
-codeforge ζ arc Test lane plugin. TestAgent 단독 + owner doc 부재 (가장 단순한 lane).
+codeforge 통합테스트 lane plugin. IntegrationTestAgent 전담 — CI gate 이후 `tests/integration/` 전체 suite 동적 실행.
 
 ## Plugin position
 
 본 plugin 은 codeforge wrapper 의 dependency. 단독 동작 불가 — codeforge core (>= 3.0.0).
 
+**Lane 위치**: CI gate PASS 이후, 보안 테스트(SecurityTestPL) 이전. Orchestrator가 직접 spawn.
+
 ## Inter-plugin contracts
 
-- `test_verdict v1` — [`docs/inter-plugin-contracts/test-verdict-v1.md`](docs/inter-plugin-contracts/test-verdict-v1.md) (canonical SSOT)
+- `test_verdict v1` — [`docs/inter-plugin-contracts/test-verdict-v1.md`](docs/inter-plugin-contracts/test-verdict-v1.md) — Archived (CFP-317 / ADR-048)
+- `test_verdict v2` — [`contracts/test-verdict-v2.md`](contracts/test-verdict-v2.md) (canonical SSOT) — Active (CFP-367 / ADR-055)
 
 ## Self-write 책임
 
 | Path | 책임 agent |
 |---|---|
-| `[구현-테스트]` prefix GitHub comment (functional 영역) | TestAgent |
-| `[구현-테스트]` prefix GitHub comment (stateful 영역) | StatefulTestAgent |
-| `phase:구현-테스트` → `phase:보안-테스트` transition | (Orchestrator — 두 verdict 통합 후) |
+| `[통합-테스트]` prefix GitHub comment | IntegrationTestAgent |
+| `phase:통합-테스트` → `phase:보안-테스트` transition | Orchestrator (verdict 수령 후) |
+| `tests/integration/<story-key>/` 테스트 파일 write | IntegrationTestAgent |
 
-> Story §9.3 (테스트 결과) 는 Orchestrator 가 verdict 받아 처리 — agent 직접 write 안 함.
+> Story §9 통합테스트 섹션은 Orchestrator가 verdict 받아 처리 — agent 직접 write 안 함.
 
-Story §10 FIX Ledger append 는 **Orchestrator 단독** (codeforge core CFP-32 monopoly). TestAgent / StatefulTestAgent 는 verdict 에 `fix_routing_hint` 첨부만.
+Story §10 FIX Ledger append는 **Orchestrator 단독** (CFP-32 monopoly).
+
+## 구현 테스트 lane (TestAgent / StatefulTestAgent) — DEPRECATED 유지
+
+TestAgent / StatefulTestAgent는 ADR-048 §결정 2에 의해 deprecated 유지.
+역사적 참조용으로 `agents/TestAgent.md`, `agents/StatefulTestAgent.md` 보존.
+신규 Story에서는 IntegrationTestAgent만 spawn.
 
 ## Failure ownership 매트릭스 (CFP-47 / ADR-015)
 
