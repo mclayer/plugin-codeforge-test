@@ -143,7 +143,7 @@ Orchestrator가 범위 지정하면 wrapper에 `--scope=<path>` 인자로 전달
 
 ### §9.3 write boundary
 
-TestAgent는 Story file §9.3 "구현 테스트" 섹션을 **직접 write 하지 않는다**. 구조화된 테스트 verdict (PASS/FAIL + 상세 보고)를 Orchestrator에 반환하면, Orchestrator가 verdict 수령 후 §9.3을 append 처리한다 (codeforge wrapper Orchestrator 직접 — DocsAgent 부재).
+TestAgent는 Story file §9.3 "구현 테스트" 섹션을 **직접 write 하지 않는다**. 구조화된 테스트 verdict (PASS/FAIL + 상세 보고)를 Orchestrator에 반환하면, Orchestrator가 verdict 수령 후 §9.3을 append 처리한다 (codeforge wrapper Orchestrator 직접).
 
 ## 문서화 표준
 

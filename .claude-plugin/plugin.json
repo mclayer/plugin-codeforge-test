@@ -1,7 +1,7 @@
 {
   "name": "codeforge-test",
-  "version": "1.0.0",
-  "description": "codeforge Integration Test lane plugin (CFP-367 / ADR-055 — 부활). IntegrationTestAgent (Sonnet tier) 1 에이전트: §8.6 계약 이행 + docker-compose.test.yml 동적 실행 + 전체 suite regression + test-verdict-v2 생성. codeforge core 의존.",
+  "version": "1.0.1",
+  "description": "codeforge Integration Test lane plugin (CFP-367 / ADR-055 — 부활). IntegrationTestAgent (Sonnet tier) 1 에이전트: §8.6 계약 이행 + docker-compose.test.yml 동적 실행 + 전체 suite regression + test-verdict-v2 생성. codeforge core 의존. + CFP-307 DocsAgent 잔존 참조 제거 (2026-05-10).",
   "author": {
     "name": "Josh"
   },
