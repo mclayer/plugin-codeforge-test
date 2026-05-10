@@ -42,8 +42,8 @@ test_verdict:
     failed: int
     regression_baseline: int   # 이번 Story 이전 존재하던 테스트 수 (회귀 검증 대상)
     new_tests_added: int       # 이번 Story에서 추가된 신규 테스트 수
-  dynamic_test_compliance: boolean  # docker-compose.test.yml 환경 사용 여부
-  docker_compose_used: boolean
+  dynamic_test_compliance: boolean  # docker-compose.test.yml 환경 사용 여부 (PASS 조건 — true 필수)
+  docker_compose_used: boolean      # dynamic_test_compliance 전제 조건 — 컨테이너 실제 구동 여부
   failures:
     - test_id: string          # "{test_file}::{test_name}"
       failure_type: "regression" | "new_test" | "infra_setup"
