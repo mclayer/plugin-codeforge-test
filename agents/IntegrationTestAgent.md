@@ -13,7 +13,6 @@ permissions:
     - Write(tests/integration/**)
     - Edit(tests/integration/**)
     - mcp__github__add_issue_comment
-    - mcp__github__issue_write
   deny:
     - Edit(src/**)
     - Write(src/**)
@@ -43,6 +42,9 @@ Story file `docs/stories/<KEY>.md` §8.6을 Read로 읽어 다음을 확인:
 - `dynamic_test_required: true`
 
 §8.6이 `N/A`인 경우(면제 Story) → 즉시 PASS 반환 (suite 실행 생략).
+면제 Story의 test-verdict-v2 패킷 반환 형식:
+suite_summary.total: 0, passed: 0, failed: 0, regression_baseline: 0, new_tests_added: 0
+dynamic_test_compliance: false (suite 미실행), pl_recommendation: PASS
 
 §8.6 시나리오를 기반으로 `tests/integration/<story-key>/test_<scenario>.py` 파일 작성.
 파일명: `test_<scenario_name_snake_case>.py` (예: `test_order_placement_boundary.py`)
@@ -61,8 +63,8 @@ docker-compose -f docker-compose.test.yml down
 ```
 
 **동적 테스트 원칙**:
-- 내부 컴포넌트 정적 mock 금지 (OrderService, Repository 등 시스템 내부를 mock으로 교체하면 경계 동작 미검증 → P0 위반)
-- 외부 의존성 WireMock stub 허용 (Bithumb REST API, 거래소 WebSocket 등 제어 불가 외부 시스템)
+- 내부 컴포넌트 정적 mock 금지 (내부 서비스 클래스, Repository 등 시스템 내부를 mock으로 교체하면 경계 동작 미검증 → P0 위반)
+- 외부 의존성 WireMock stub 허용 (외부 REST API, 외부 WebSocket 등 제어 불가 외부 시스템)
 - 판별 기준: "이 mock을 제거하고 실제 시스템을 붙이면 테스트 결과가 달라지는가?" — 달라진다면 내부 mock(금지), 달라지지 않는다면 외부 mock(허용)
 
 ### 3. Regression PASS 확인
