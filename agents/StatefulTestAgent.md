@@ -1,5 +1,7 @@
 ---
 name: StatefulTestAgent
+model: claude-sonnet-4-6
+# rate-limit 시 Orchestrator가 model:opus로 fallback spawn — ADR-057
 role: test-stateful-worker
 mandate:
   primary:

@@ -1,6 +1,7 @@
 ---
 name: IntegrationTestAgent
 model: claude-sonnet-4-6
+# rate-limit 시 Orchestrator가 model:opus로 fallback spawn — ADR-057
 description: Epic 통합테스트 lane 전담 — §8.6 Integration Test Contract 이행, Epic 하위 전체 Story CI gate PASS 이후 1회 실행. Deployability 검증(4-step, project.yaml health_checks+db_probes) + Baseline Suite + Story Suite 자동 생성(story_keys 메타데이터 주입) + Baseline 자동 승격(self-commit) + story_keys blame 3-tier
 permissions:
   allow:
